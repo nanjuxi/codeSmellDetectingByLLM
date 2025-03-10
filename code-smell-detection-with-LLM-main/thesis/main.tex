@@ -1,0 +1,43 @@
+\documentclass[openany,bsc]{IUST-Thesis}
+\input{preamble}
+\begin{document}
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+\tracinggroups=1
+\pagenumbering{harfi}
+
+\setlength{\parindent}{0cm}
+\input{pages/faTitle}
+\tableofcontents \newpage
+\listoffigures \newpage
+\listoftables \newpage
+\pagestyle{fancy}
+
+\include{chapters/one-introduction}
+\include{chapters/two-literature-review}
+\include{chapters/three-problemstatement}
+\include{chapters/four-method}
+\include{chapters/five-evaluation}
+\include{chapters/six-conclusion}
+\include{pages/dicfa2en}
+\include{appendix/appendix-1}
+\include{appendix/appendix-2}
+\include{appendix/appendix-3}
+\include{appendix/appendix-4}
+\def\bibname{\rl{کتاب نامه}}
+\pagestyle{empty}
+{
+	\onehalfspacing
+	\bibliographystyle{IEEEtran}%{acm-fa}
+	\begin{latin}
+		\bibliography{references/references}
+	\end{latin}
+}
+\pagestyle{fancy}
+
+\onehalfspacing
+\printindex
+\input{pages/enTitle}
+\label{LastPage}
+\end{document}

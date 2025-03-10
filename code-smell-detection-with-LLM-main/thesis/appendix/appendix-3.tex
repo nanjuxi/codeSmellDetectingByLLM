@@ -1,0 +1,41 @@
+\chapter*{پیوست ۳ - نحوه‌ی ارزیابی مدل}
+\label{appendix:3}
+\begin{latin}
+\begin{lstlisting}[language=Python, title=\rl{تابع بدست آوردن معیار های ارزیابی از روی خروجی مدل و برچسب های داده}]
+def compute_metrics(p):
+    # Convert predictions to sigmoid and then to binary
+    preds = torch.sigmoid(torch.tensor(p.predictions))
+    preds = (preds > 0.5).int()
+    labels = torch.tensor(p.label_ids)
+
+    # Accuracy
+    accuracy = (preds == labels).float().mean().item()
+
+    # Precision, Recall, F1 Score
+    true_positive = (preds * labels).sum(dim=0).float()
+    predicted_positive = preds.sum(dim=0).float()
+    actual_positive = labels.sum(dim=0).float()
+
+    # Adding a small epsilon to avoid division by zero
+    epsilon = 1e-7
+
+    precision = (true_positive / (predicted_positive + epsilon)).mean().item()
+    recall = (true_positive / (actual_positive + epsilon)).mean().item()
+    f1_score = (2 * precision * recall / (precision + recall + epsilon))
+
+    return {
+        "accuracy": accuracy,
+        "precision": precision,
+        "recall": recall,
+        "f1_score": f1_score
+    }
+\end{lstlisting}
+\end{latin}
+
+\begin{latin}
+\begin{lstlisting}[language=Python, title=\rl{ارزیابی مدل با استفاده از تابع ارزیابی تعریف شده}]
+results = trainer.evaluate()
+print(results)
+\end{lstlisting}
+\end{latin}
+\clearpage
